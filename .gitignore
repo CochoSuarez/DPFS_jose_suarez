@@ -1,0 +1,15 @@
+# Dependencias de Node (React)
+node_modules/
+dist/
+build/
+.env
+
+# Archivos de Diseño y OS
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# Si usas herramientas de prototipado locales
+*.sketch
+*.fig

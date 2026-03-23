@@ -29,3 +29,8 @@ Para el diseño y funcionalidad de "Instrumentos Boutique", me inspiré en los s
 3.  **Sweetwater.com:** *Inspiración en UX de compra.* Su proceso de checkout y la cantidad de información técnica detallada por producto es excelente para el público audiófilo.
 4.  **Apple.com:** *Inspiración estética (Minimalismo).* Su uso de espacios en blanco, tipografía geométrica y transiciones fluidas es el estándar que aspiro para el look-and-feel de la app.
 5.  **Andertons.co.uk:** *Inspiración en navegación.* Tienen una estructura de menú muy intuitiva que facilita la búsqueda en un catálogo amplio.
+
+---
+## Gestión del Proyecto
+Podés seguir el avance de los Sprints en nuestro tablero de trabajo:
+https://github.com/users/CochoSuarez/projects/2

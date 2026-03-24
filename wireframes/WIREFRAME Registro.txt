@@ -1,0 +1,18 @@
+___________________________
+|                           |
+|       CREAR CUENTA        |
+|                           |
+| ( Nombre Completo )       |
+|                           |
+| ( Email )                 |
+|                           |
+| ( Contraseña )            |
+|                           |
+| ( Confirmar Contraseña )  |
+|                           |
+| [ REGISTRARME ]           |
+|                           |
+| ------------------------- |
+| ¿Ya tienes cuenta?        |
+| [ Iniciar Sesión ]        |
+|___________________________|

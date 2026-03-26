@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<%- include('../partials/head') %>
+<body>
+    <%- include('../partials/header') %>
+    <main style="max-width: 600px; margin: 40px auto; background: #1a1a1a; padding: 30px; border: 1px solid #c4a77d;">
+        <h2 style="color: #c4a77d; margin-bottom: 20px;">Cargar Nuevo Producto</h2>
+        <form action="/products" method="POST" class="create-form" style="display: flex; flex-direction: column; gap: 15px;">
+            <input type="text" name="name" placeholder="Nombre del producto" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <textarea name="description" placeholder="Descripción" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;"></textarea>
+            <input type="number" name="price" placeholder="Precio" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <select name="category" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+                <option value="">Elegí una categoría</option>
+                <option value="electricas">Guitarras Eléctricas</option>
+                <option value="acusticas">Guitarras Acústicas</option>
+            </select>
+            <input type="text" name="colors" placeholder="Colores disponibles" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <label style="font-size: 14px; color: #666;">Imagen del producto:</label>
+            <input type="file" name="image">
+            <button type="submit" style="background: #c4a77d; padding: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px;">CREAR PRODUCTO</button>
+        </form>
+    </main>
+    <%- include('../partials/footer') %>
+</body>
+</html>

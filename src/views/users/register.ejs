@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('../partials/head') %>
+
+<body>
+    <%- include('../partials/header') %>
+
+    <main>
+        <div class="auth-container">
+            <h2 style="color: #c4a77d; text-align: center; margin-bottom: 20px;">Crear Cuenta</h2>
+            
+            <form action="/users/registro" method="POST">
+                <input type="text" name="fullName" placeholder="Nombre Completo">
+                <input type="email" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Contraseña">
+                <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña">
+                
+                <button type="submit">REGISTRARME</button>
+            </form>
+            
+            <p style="text-align: center; margin-top: 15px; font-size: 13px; color: #666;">
+                ¿Ya tenés cuenta? <a href="/users/login" style="color: #c4a77d; text-decoration: none;">Iniciá sesión</a>
+            </p>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<%- include('../partials/head') %>
+<body>
+    <%- include('../partials/header') %>
+    <main>
+        <h2 style="color: #c4a77d; margin-bottom: 20px; letter-spacing: 2px;">TU CARRITO (1 item)</h2>
+        
+        <div class="cart-wrapper">
+            <section class="cart-items">
+                <div class="cart-item">
+                    <img src="https://images.unsplash.com/photo-1550291652-639a23c692cf?w=200" alt="Guitarra">
+                    <div style="flex: 1;">
+                        <h3 style="margin-bottom: 5px;">Squier Limited Edition Classic Vibe '60s</h3>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                            <label style="font-size: 14px; color: #666;">Cantidad:</label>
+                            <input type="number" value="1" style="width: 60px; padding: 8px; background: #0f0f0f; border: 1px solid #333; color: white; text-align: center;">
+                        </div>
+                    </div>
+                    <p style="font-weight: bold; font-size: 18px;">$450.000</p>
+                </div>
+            </section>
+
+            <aside class="cart-summary">
+                <h3 style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">Resumen de compra</h3>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>$450.000</span>
+                </div>
+                <div class="summary-row" style="font-weight: bold; font-size: 18px; color: #c4a77d; border-top: 1px solid #333; padding-top: 10px;">
+                    <span>Total:</span>
+                    <span>$450.000</span>
+                </div>
+                <button class="btn-checkout">FINALIZAR COMPRA</button>
+            </aside>
+        </div>
+    </main>
+    <%- include('../partials/footer') %>
+</body>
+</html>

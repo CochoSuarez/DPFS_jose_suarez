@@ -1,0 +1,24 @@
+{
+  "name": "dpfs_jose_suarez",
+  "version": "1.0.0",
+  "description": "**Instrumentos Boutique** es un marketplace e-commerce especializado en guitarras eléctricas, bajos, pedales de efectos y amplificadores de gama alta, fabricados por luthiers y marcas independientes. No somos una tienda masiva; somos una curaduría de arte sonoro.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CochoSuarez/DPFS_jose_suarez.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CochoSuarez/DPFS_jose_suarez/issues"
+  },
+  "homepage": "https://github.com/CochoSuarez/DPFS_jose_suarez#readme",
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express": "^5.2.1"
+  }
+}

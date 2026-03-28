@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <%- include('../partials/head') %>
-
 <body>
     <%- include('../partials/header') %>
-
-    <main style="max-width: 600px; margin: 40px auto; background: #1a1a1a; padding: 30px; border: 1px solid #c4a77d; border-radius: 4px;">
-        <h2 style="color: #c4a77d; text-align: center; margin-bottom: 25px; letter-spacing: 1px;">EDITAR PRODUCTO</h2>
+    <main style="max-width: 600px; margin: 40px auto; background: #1a1a1a; padding: 30px; border: 1px solid #c4a77d;">
+        <h2 style="color: #c4a77d; margin-bottom: 20px;">Editando: <%= productToEdit.name %></h2>
         
-        <form action="/products/editar" method="POST" style="display: flex; flex-direction: column; gap: 18px;">
+        <form action="/products/<%= productToEdit.id %>?_method=PUT" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 15px;">
             
-            <div style="display: flex; flex-direction: column; gap: 5px;">
-                <label style="font-size: 14px; color: #c4a77d;">Nombre del instrumento:</label>
-                <input type="text" name="name" value="Guitarra Luthier Custom" style="padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
-            </div>
+            <label style="color: #666; font-size: 12px;">Nombre del instrumento</label>
+            <input type="text" name="name" value="<%= productToEdit.name %>" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            
+            <label style="color: #666; font-size: 12px;">Descripción</label>
+            <textarea name="description" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white; min-height: 80px;"><%= productToEdit.description %></textarea>
+            
+            <label style="color: #666; font-size: 12px;">Precio</label>
+            <input type="number" name="price" value="<%= productToEdit.price %>" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            
+            <label style="color: #666; font-size: 12px;">Categoría</label>
+            <select name="category" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+                <option value="electricas" <%= productToEdit.category == 'electricas' ? 'selected' : '' %>>Guitarras Eléctricas</option>
+                <option value="acusticas" <%= productToEdit.category == 'acusticas' ? 'selected' : '' %>>Guitarras Acústicas</option>
+            </select>
 
-            <div style="display: flex; flex-direction: column; gap: 5px;">
-                <label style="font-size: 14px; color: #c4a77d;">Descripción:</label>
-                <textarea name="description" rows="4" style="padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">Cuerpo de caoba, mango de arce y terminación artesanal premium.</textarea>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 5px;">
-                <label style="font-size: 14px; color: #c4a77d;">Precio ($):</label>
-                <input type="number" name="price" value="450000" style="padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 5px;">
-                <label style="font-size: 14px; color: #c4a77d;">Categoría:</label>
-                <select name="category" style="padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
-                    <option value="electricas" selected>Guitarras Eléctricas</option>
-                    <option value="acusticas">Guitarras Acústicas</option>
-                    <option value="bajos">Bajos</option>
-                </select>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 5px;">
-                <label style="font-size: 14px; color: #c4a77d;">Colores / Terminaciones:</label>
-                <input type="text" name="colors" value="Sunburst, Aged Gold" style="padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-                <label style="font-size: 14px; color: #666;">Imagen actual: guitarra-custom.jpg</label>
-                <input type="file" name="image" style="color: #666; font-size: 14px;">
-            </div>
-
-            <div style="display: flex; gap: 15px; margin-top: 20px;">
-                <button type="submit" style="flex: 2; background: #c4a77d; color: black; padding: 15px; border: none; font-weight: bold; cursor: pointer;">
-                    GUARDAR CAMBIOS
-                </button>
-                <a href="/" style="flex: 1; text-align: center; background: transparent; color: #666; padding: 15px; border: 1px solid #333; text-decoration: none; font-size: 14px; display: flex; align-items: center; justify-content: center;">
-                    CANCELAR
-                </a>
-            </div>
-
+            <label style="color: #c4a77d; font-size: 14px; margin-top: 10px;">Imagen actual: <%= productToEdit.image %></label>
+            <input type="file" name="image" style="color: #666;">
+            
+            <button type="submit" style="background: #c4a77d; padding: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; color: black;">
+                GUARDAR CAMBIOS
+            </button>
+            <a href="/products" style="text-align: center; color: #666; text-decoration: none; font-size: 14px;">Cancelar</a>
         </form>
     </main>
-
     <%- include('../partials/footer') %>
 </body>
 </html>

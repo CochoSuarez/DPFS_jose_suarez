@@ -3,11 +3,35 @@
 <%- include('../partials/head') %>
 <body>
     <%- include('../partials/header') %>
+    
     <main>
         <h2 style="text-align: center; color: #c4a77d; margin-bottom: 30px;">Catálogo de Instrumentos</h2>
+        
         <section class="productos-grid">
-            </section>
+            <% products.forEach(product => { %>
+                <article class="producto-card">
+                    <div class="imagen-contenedor">
+                        <img src="/images/products/<%= product.image %>" alt="<%= product.name %>">
+                    </div>
+                    
+                    <div class="info-producto">
+                        <h3><%= product.name %></h3>
+                        <p class="categoria"><%= product.category %></p>
+                        <p class="precio">$<%= product.price.toLocaleString('es-AR') %></p>
+                        
+                        <div class="botones-accion">
+                            <a href="/products/<%= product.id %>" class="btn-detalle">VER DETALLE</a>
+                            
+                            <a href="/products/<%= product.id %>/edit" class="btn-edit">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            <% }); %>
+        </section>
     </main>
+
     <%- include('../partials/footer') %>
 </body>
 </html>

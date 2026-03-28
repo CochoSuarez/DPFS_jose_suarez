@@ -4,6 +4,8 @@
   "description": "**Instrumentos Boutique** es un marketplace e-commerce especializado en guitarras eléctricas, bajos, pedales de efectos y amplificadores de gama alta, fabricados por luthiers y marcas independientes. No somos una tienda masiva; somos una curaduría de arte sonoro.",
   "main": "index.js",
   "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +20,13 @@
   },
   "homepage": "https://github.com/CochoSuarez/DPFS_jose_suarez#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "ejs": "^5.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "method-override": "^3.0.0",
+    "multer": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }

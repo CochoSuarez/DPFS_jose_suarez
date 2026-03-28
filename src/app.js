@@ -1,23 +1,29 @@
 const express = require('express');
 const path = require('path');
+const methodOverride = require('method-override');
 const app = express();
 
+// Requerimos los enrutadores
+const productRouter = require('./routes/productRouter');
+const userRouter = require('./routes/userRouter'); // <-- Nuevo
+const productController = require('./controllers/productController');
+
+// --- CONFIGURACIÓN Y MIDDLEWARES ---
 app.use(express.static(path.resolve(__dirname, '../public')));
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, './views'));
 
-// RUTAS
-app.get('/', (req, res) => res.render('index'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(methodOverride('_method'));
 
-// Productos
-app.get('/products', (req, res) => res.render('products/productList'));
-app.get('/products/detalle', (req, res) => res.render('products/productDetail'));
-app.get('/products/carrito', (req, res) => res.render('products/productCart'));
-app.get('/products/crear', (req, res) => res.render('products/productCreate'));
-app.get('/products/editar', (req, res) => res.render('products/productEdit'));
+// --- RUTAS ---
 
-// Usuarios
-app.get('/users/login', (req, res) => res.render('users/login'));
-app.get('/users/registro', (req, res) => res.render('users/register'));
+// Home manejado por productController
+app.get('/', productController.index);
+
+// Uso de enrutadores con sus prefijos
+app.use('/products', productRouter);
+app.use('/users', userRouter); // <-- Ahora todas las rutas de usuario pasan por aquí
 
 app.listen(3001, () => console.log('Servidor Boutique funcionando en http://localhost:3001'));

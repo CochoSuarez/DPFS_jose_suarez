@@ -6,8 +6,40 @@
 <body>
     <%- include('../partials/header') %>
 
-    <main>
-        </main>
+    <main class="detalle-producto-main">
+        <section class="contenedor-detalle">
+            <div class="bloque-imagen">
+                <img src="/images/products/<%= product.image %>" alt="<%= product.name %>">
+            </div>
+
+            <div class="bloque-info">
+                <p class="categoria-label"><%= product.category %></p>
+                <h1><%= product.name %></h1>
+                
+                <div class="divisor-dorado"></div>
+
+                <p class="descripcion-texto">
+                    <%= product.description %>
+                </p>
+
+                <p class="precio-detalle">$<%= product.price.toLocaleString('es-AR') %></p>
+
+                <div class="acciones-compra">
+                    <button class="btn-comprar">AGREGAR AL CARRITO</button>
+                    
+                    <div class="admin-actions" style="margin-top: 20px;">
+                        <a href="/products/<%= product.id %>/edit" class="btn-edit-secundario">
+                            Modificar Producto
+                        </a>
+                        
+                        <form action="/products/<%= product.id %>?_method=DELETE" method="POST" style="display: inline;">
+                            <button type="submit" class="btn-delete-link">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <%- include('../partials/footer') %>
 </body>

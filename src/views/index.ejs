@@ -11,41 +11,18 @@
         </section>
 
         <section class="productos-grid">
-            <article class="producto-card">
-                <img src="https://images.unsplash.com/photo-1550291652-639a23c692cf?w=400" alt="Guitarra">
-                <div class="info">
-                    <h3>Guitarra Luthier Custom</h3>
-                    <p class="precio">$450.000</p>
-                    <a href="/products/detalle" class="btn-detalle">Ver Detalle</a>
-                </div>
-            </article>
-
-            <article class="producto-card">
-                <img src="https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=400" alt="Telecaster">
-                <div class="info">
-                    <h3>Telecaster Aged Gold</h3>
-                    <p class="precio">$380.000</p>
-                    <a href="/products/detalle" class="btn-detalle">Ver Detalle</a>
-                </div>
-            </article>
-
-            <article class="producto-card">
-                <img src="https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?w=400" alt="Acustica">
-                <div class="info">
-                    <h3>Acústica de Concierto</h3>
-                    <p class="precio">$520.000</p>
-                    <a href="/products/detalle" class="btn-detalle">Ver Detalle</a>
-                </div>
-            </article>
-
-            <article class="producto-card">
-                <img src="https://images.unsplash.com/photo-1550985616-10810253b84d?w=400" alt="Jazzmaster">
-                <div class="info">
-                    <h3>Jazzmaster Sunburst</h3>
-                    <p class="precio">$410.000</p>
-                    <a href="/products/detalle" class="btn-detalle">Ver Detalle</a>
-                </div>
-            </article>
+            <% products.forEach(producto => { %>
+                <article class="producto-card">
+                    <img src="/images/products/<%= producto.image %>" alt="<%= producto.name %>">
+                    
+                    <div class="info">
+                        <h3><%= producto.name %></h3>
+                        <p class="precio">$<%= producto.price.toLocaleString('es-AR') %></p>
+                        
+                        <a href="/products/<%= producto.id %>" class="btn-detalle">Ver Detalle</a>
+                    </div>
+                </article>
+            <% }) %>
         </section>
     </main>
 

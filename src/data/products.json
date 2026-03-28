@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Squier Classic Vibe '60s Custom Telecaster",
+    "description": "Cuerpo de nato, mango de arce en forma de C. Una joya clásica con sonido vintage.",
+    "image": "guitarra-1.jpg",
+    "category": "electricas",
+    "colors": "Oxblood, Sunburst",
+    "price": 439000
+  },
+  {
+    "id": 2,
+    "name": "Gibson Les Paul Standard",
+    "description": "El estándar de oro de las guitarras eléctricas. Tono cálido y sustain infinito.",
+    "image": "guitarra-2.jpg",
+    "category": "electricas",
+    "colors": "Goldtop, Heritage Cherry",
+    "price": 2800000
+  },
+  {
+    "id": 3,
+    "name": "Bajo Fender Precision Bass Professional",
+    "description": "El bajo más grabado de la historia. Sonido potente y definido.",
+    "image": "bajo-1.jpg",
+    "category": "bajos",
+    "colors": "Black, Olympic White",
+    "price": 1200000
+  },
+  {
+    "id": 4,
+    "name": "Guitarra Acústica Taylor 214ce",
+    "description": "Excelente proyección sonora y una comodidad inigualable para tocar horas.",
+    "image": "acustica-1.jpg",
+    "category": "acusticas",
+    "colors": "Natural",
+    "price": 950000
+  }
+]

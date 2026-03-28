@@ -30,3 +30,15 @@ Partials: Separamos el Head, Header y Footer para no repetir código.
 Carpetas: Organizamos las vistas en /products y /users como pedía el Sprint.
 
 Nuevas Vistas: Sumamos el listado de productos y los formularios de creación y edición sin cambiar el diseño que ya teníamos.
+
+
+---
+
+## Sprint 4: JSON y CRUD de Productos
+**Planificación y Tareas:**
+
+1. **Estructura de Datos:** Creación de carpeta `data` y archivos `products.json` y `users.json`. (Completado ✅)
+2. **Refactor de Controladores:** Modificar `productController.js` para leer el JSON usando el módulo `fs`.
+3. **Rutas CRUD:** Implementar las 7 rutas principales (Listado, Detalle, Creación, Guardado, Edición, Actualización y Borrado).
+4. **Métodos HTTP:** Implementar `POST`, `PUT` y `DELETE` para que los formularios afecten al archivo JSON.
+5. **Pruebas de Funcionalidad:** Verificar que al borrar un producto desaparezca del JSON.

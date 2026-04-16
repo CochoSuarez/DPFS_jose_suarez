@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de <%= user.nombre %></title>
+    <link rel="stylesheet" href="/css/styles.css"> </head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main style="padding: 20px; text-align: center;">
+        <h1>Bienvenido, <%= user.nombre %></h1>
+        
+        <div class="profile-card" style="margin-top: 20px;">
+            <img src="/images/users/<%= user.avatar %>" alt="Avatar" style="width: 150px; border-radius: 50%; border: 2px solid #ccc;">
+            
+            <div class="user-info" style="margin-top: 15px;">
+                <p><strong>Email:</strong> <%= user.email %></p>
+            </div>
+
+            <div class="actions" style="margin-top: 30px;">
+                <a href="/users/logout" style="background-color: #ff4d4d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

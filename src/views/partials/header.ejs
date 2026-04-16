@@ -5,8 +5,15 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/users/login">Login</a></li>
-            <li><a href="/users/registro">Registro</a></li>
+
+            <% if (locals.isLogged) { %>
+                <li><a href="/users/profile">Hola, <%= locals.userLogged.nombre %></a></li>
+                <li><a href="/users/logout">Salir</a></li>
+            <% } else { %>
+                <li><a href="/users/login">Login</a></li>
+                <li><a href="/users/registro">Registro</a></li>
+            <% } %>
+
             <li><a href="/products/carrito">🛒</a></li>
         </ul>
     </nav>

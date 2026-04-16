@@ -21,8 +21,10 @@
   "homepage": "https://github.com/CochoSuarez/DPFS_jose_suarez#readme",
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "ejs": "^5.0.1",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "method-override": "^3.0.0",
     "multer": "^2.1.1"
   },

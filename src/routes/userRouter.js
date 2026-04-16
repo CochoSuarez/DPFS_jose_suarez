@@ -4,10 +4,13 @@ const path = require('path');
 const multer = require('multer');
 const userController = require('../controllers/userController');
 
-// --- CONFIGURACIÓN DE MULTER PARA USUARIOS ---
+// Requerimos los middlewares
+const guestMiddleware = require('../middlewares/guestMiddleware');
+const authMiddleware = require('../middlewares/authMiddleware');
+
+// --- CONFIGURACIÓN DE MULTER ---
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        // Las fotos de perfil van a una carpeta distinta: /images/users
         cb(null, path.resolve(__dirname, '../../public/images/users'));
     },
     filename: (req, file, cb) => {
@@ -18,14 +21,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // --- RUTAS ---
-router.get('/login', userController.login);
-router.get('/registro', userController.register);
 
-// Ruta para procesar el registro (POST)
+// Login (Solo invitados)
+router.get('/login', guestMiddleware, userController.login);
+router.post('/login', userController.processLogin);
+
+// Registro (Solo invitados)
+router.get('/registro', guestMiddleware, userController.register);
 router.post('/registro', upload.single('avatar'), userController.processRegister);
 
+// Perfil (Solo usuarios logueados)
+router.get('/profile', authMiddleware, userController.profile);
 
-// Ruta para procesar el login (POST)
-router.post('/login', userController.processLogin);
+// Logout
+router.get('/logout', userController.logout);
 
 module.exports = router;

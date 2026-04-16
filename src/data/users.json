@@ -5,5 +5,12 @@
   "email": "cochos@cochos.com",
   "password": "$2b$10$lTLXlCn.PGEWDIHtdXeeWO57vW3sMpy3XmqKsGpd7CdGjRIc9uWa2",
   "avatar": "1774708148359_user.jpg"
+ },
+ {
+  "id": 2,
+  "nombre": "Jimi Hendrix",
+  "email": "jimiH@woodstock.com",
+  "password": "$2b$10$TjzyYIIT3vkyPW9.kXT/k.TeUH3ZK1NCMqI9OKO7QxxmPOk7fIHsm",
+  "avatar": "1776344508408_user.jpg"
  }
 ]

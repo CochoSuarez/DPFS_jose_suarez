@@ -32,13 +32,34 @@ Carpetas: Organizamos las vistas en /products y /users como pedía el Sprint.
 Nuevas Vistas: Sumamos el listado de productos y los formularios de creación y edición sin cambiar el diseño que ya teníamos.
 
 
----
 
-## Sprint 4: JSON y CRUD de Productos
-**Planificación y Tareas:**
 
-1. **Estructura de Datos:** Creación de carpeta `data` y archivos `products.json` y `users.json`. (Completado ✅)
-2. **Refactor de Controladores:** Modificar `productController.js` para leer el JSON usando el módulo `fs`.
-3. **Rutas CRUD:** Implementar las 7 rutas principales (Listado, Detalle, Creación, Guardado, Edición, Actualización y Borrado).
-4. **Métodos HTTP:** Implementar `POST`, `PUT` y `DELETE` para que los formularios afecten al archivo JSON.
-5. **Pruebas de Funcionalidad:** Verificar que al borrar un producto desaparezca del JSON.
+Sprint 4: JSON y CRUD de Productos
+Planificación y Tareas:
+
+Estructura de Datos:** Creación de carpeta data y archivos products.json y users.json. 
+Refactor de Controladores:** Modificar productController.js para leer el JSON usando el módulo fs.
+Rutas CRUD: Implementar las 7 rutas principales (Listado, Detalle, Creación, Guardado, Edición, Actualización y Borrado).
+Métodos HTTP: Implementar POST, PUT y DELETE para que los formularios afecten al archivo JSON.
+Pruebas de Funcionalidad: Verificar que al borrar un producto desaparezca del JSON.
+
+
+
+Sprint 5: Session, Cookies y Usuarios
+Planificación y Tareas:
+
+Seguridad: Encriptación de contraseñas con bcryptjs en el registro y login. 
+
+Session y Cookies: Implementación de "sesión" para mantener al usuario logueado y "cookies" para la función de recordarme. 
+
+Middlewares: Creación de filtros para proteger el acceso a ciertas rutas (como el perfil). 
+
+Header Dinámico: Modificación del menú para que cambie según si el usuario inició sesión o no. 
+
+Conclusiones:
+
+Lo más difícil fue entender cómo pasar los datos del usuario a todas las vistas usando el middleware de aplicación.
+
+Me sirvió mucho ver cómo el sitio "cambia" solo cuando te logueás, lo hace ver mucho más profesional.
+
+Aprendí a usar las herramientas de desarrollador del navegador para revisar si las cookies se estaban creando bien.

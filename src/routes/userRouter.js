@@ -33,6 +33,12 @@ router.post('/registro', upload.single('avatar'), userController.processRegister
 // Perfil (Solo usuarios logueados)
 router.get('/profile', authMiddleware, userController.profile);
 
+// --- EDICIÓN DE PERFIL (NUEVO) ---
+// Formulario de edición
+router.get('/edit/:id', authMiddleware, userController.edit);
+// Acción de actualización
+router.put('/edit/:id', authMiddleware, upload.single('avatar'), userController.update);
+
 // Logout
 router.get('/logout', userController.logout);
 

@@ -63,3 +63,23 @@ Lo más difícil fue entender cómo pasar los datos del usuario a todas las vist
 Me sirvió mucho ver cómo el sitio "cambia" solo cuando te logueás, lo hace ver mucho más profesional.
 
 Aprendí a usar las herramientas de desarrollador del navegador para revisar si las cookies se estaban creando bien.
+
+
+
+## Retrospectiva - Sprint 6 (Base de Datos y Sequelize)
+
+**1. ¿Qué hicimos bien?**
+* Logramos migrar exitosamente toda la lógica de archivos JSON a una base de datos relacional (MySQL).
+* Implementamos un buscador funcional que mejora significativamente la UX.
+* Refinamos el diseño del Header, logrando un equilibrio visual boutique.
+* Integramos correctamente las asociaciones de Sequelize (Products belongsTo Category).
+
+**2. ¿Qué podríamos hacer mejor?**
+* Las validaciones de formularios todavía son básicas; deberíamos robustecerlas en el próximo sprint.
+* El manejo de errores en los controladores podría ser más específico para ayudar al debugging.
+
+**3. ¿Qué debemos dejar de hacer?**
+* Dejar de hardcodear estilos en línea en el HTML y empezar a migrar todo a clases de CSS para mantener la limpieza del código.
+
+**4. ¿Qué debemos empezar a hacer?**
+* Empezar a planificar la implementación de una API para que el Dashboard de React pueda consumir nuestros datos de manera independiente.

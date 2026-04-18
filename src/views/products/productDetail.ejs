@@ -9,11 +9,14 @@
     <main class="detalle-producto-main">
         <section class="contenedor-detalle">
             <div class="bloque-imagen">
-                <img src="/images/products/<%= product.image %>" alt="<%= product.name %>">
+                <img src="/images/products/<%= product.image %>" class="producto-detalle-imagen" alt="<%= product.name %>">
             </div>
 
             <div class="bloque-info">
-                <p class="categoria-label"><%= product.category %></p>
+                <p style="text-align: left; font-style: italic; color: #888; margin-bottom: 5px; font-family: inherit;">
+                    <%= product.category ? product.category.nombre : 'Sin categoría' %>
+                </p>
+                
                 <h1><%= product.name %></h1>
                 
                 <div class="divisor-dorado"></div>

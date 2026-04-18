@@ -1,96 +1,136 @@
-const fs = require('fs');
-const path = require('path');
-
-// Ubicación del archivo JSON
-const productsFilePath = path.join(__dirname, '../data/products.json');
+const db = require('../../models'); // Importamos los modelos
+const { Op } = require('sequelize');
 
 const controller = {
+
     // 1. Home / Listado (READ)
-    index: (req, res) => {
-        const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-        // Renderiza el index.ejs pasándole el array de productos
-        res.render('index', { products });
-    },
-
-    // 2. Detalle de un producto (READ)
-    detail: (req, res) => {
-        const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-        const product = products.find(p => p.id == req.params.id);
-        
-        if (!product) {
-            return res.send("Producto no encontrado");
+    index: async (req, res) => {
+        try {
+            const products = await db.Product.findAll({
+                include: [{ association: "category" }]
+            });
+            res.render('index', { products });
+        } catch (error) {
+            console.log(error);
+            res.send("Error al cargar los productos");
         }
-        
-        res.render('products/productDetail', { product });
     },
 
-    // 3. Formulario de creación (CREATE)
-    create: (req, res) => {
-        res.render('products/productCreate');
-    },
-
-    // 4. Acción de creación (Guardado en el JSON)
-    store: (req, res) => {
-        const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-
-        const newProduct = {
-            id: products.length > 0 ? products[products.length - 1].id + 1 : 1,
-            name: req.body.name,
-            description: req.body.description,
-            price: parseFloat(req.body.price),
-            category: req.body.category,
-            colors: req.body.colors,
-            image: req.file ? req.file.filename : 'default-image.png'
-        };
-
-        products.push(newProduct);
-        fs.writeFileSync(productsFilePath, JSON.stringify(products, null, ' '));
-        
-        res.redirect('/products');
-    },
-
-    // 5. Formulario de edición (UPDATE)
-    edit: (req, res) => {
-        const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-        const product = products.find(p => p.id == req.params.id);
-        
-        if (!product) {
-            return res.send("No se puede editar un producto inexistente");
+    // 2. Búsqueda de productos (SEARCH) - ¡NUEVO!
+    search: async (req, res) => {
+        try {
+            let busqueda = req.query.search;
+            const products = await db.Product.findAll({
+                where: {
+                    name: { [Op.like]: '%' + busqueda + '%' }
+                },
+                include: [{ association: "category" }]
+            });
+            // Usamos la misma vista de index o productList para mostrar los resultados
+            res.render('index', { products }); 
+        } catch (error) {
+            console.log(error);
+            res.send("Error al realizar la búsqueda");
         }
-        
-        res.render('products/productEdit', { productToEdit: product });
     },
 
-    // 6. Acción de edición (PUT)
-    update: (req, res) => {
-        const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-        const index = products.findIndex(p => p.id == req.params.id);
+    // 3. Detalle de un producto (READ)
+    detail: async (req, res) => {
+        try {
+            const product = await db.Product.findByPk(req.params.id, {
+                include: [{ association: "category" }]
+            });
 
-        if (index !== -1) {
-            products[index] = {
-                id: products[index].id,
+            if (!product) {
+                return res.send("Producto no encontrado");
+            }
+
+            res.render('products/productDetail', { product });
+        } catch (error) {
+            console.log(error);
+            res.send("Error al cargar el detalle");
+        }
+    },
+
+    // 4. Formulario de creación (CREATE)
+    create: async (req, res) => {
+        try {
+            const categories = await db.Category.findAll();
+            res.render('products/productCreate', { categories });
+        } catch (error) {
+            console.log(error);
+            res.send("Error al cargar el formulario de creación");
+        }
+    },
+
+    // 5. Acción de creación (Guardado en DB)
+    store: async (req, res) => {
+        try {
+            await db.Product.create({
                 name: req.body.name,
                 description: req.body.description,
                 price: parseFloat(req.body.price),
-                category: req.body.category,
-                image: req.file ? req.file.filename : products[index].image
-            };
-
-            fs.writeFileSync(productsFilePath, JSON.stringify(products, null, ' '));
+                category_id: req.body.category,
+                colors: req.body.colors,
+                image: req.file ? req.file.filename : 'default-image.png'
+            });
+            res.redirect('/products');
+        } catch (error) {
+            console.log(error);
+            res.send("Error al guardar el producto");
         }
-        
-        res.redirect('/products/' + req.params.id);
     },
 
-    // 7. Acción de borrado (DELETE)
-    destroy: (req, res) => {
-        let products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-        
-        products = products.filter(p => p.id != req.params.id);
-        
-        fs.writeFileSync(productsFilePath, JSON.stringify(products, null, ' '));
-        
-        res.redirect('/products');
+    // 6. Formulario de edición (UPDATE)
+    edit: async (req, res) => {
+        try {
+            const product = await db.Product.findByPk(req.params.id);
+            const categories = await db.Category.findAll();
+
+            if (!product) {
+                return res.send("No se puede editar un producto inexistente");
+            }
+
+            res.render('products/productEdit', {
+                productToEdit: product,
+                categories: categories
+            });
+        } catch (error) {
+            console.log(error);
+            res.send("Error al cargar el formulario de edición");
+        }
+    },
+
+    // 7. Acción de edición (PUT)
+    update: async (req, res) => {
+        try {
+            await db.Product.update({
+                name: req.body.name,
+                description: req.body.description,
+                price: parseFloat(req.body.price),
+                category_id: req.body.category,
+                image: req.file ? req.file.filename : undefined
+            }, {
+                where: { id: req.params.id }
+            });
+            res.redirect('/products/' + req.params.id);
+        } catch (error) {
+            console.log(error);
+            res.send("Error al actualizar el producto");
+        }
+    },
+
+    // 8. Acción de borrado (DELETE)
+    destroy: async (req, res) => {
+        try {
+            await db.Product.destroy({
+                where: { id: req.params.id }
+            });
+            res.redirect('/products');
+        } catch (error) {
+            console.log(error);
+            res.send("Error al eliminar el producto");
+        }
     }
 };
 

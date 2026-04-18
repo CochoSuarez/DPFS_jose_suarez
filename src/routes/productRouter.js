@@ -20,6 +20,10 @@ const upload = multer({ storage });
 
 // Listado y Creación
 router.get('/', productController.index);
+
+// BÚSQUEDA (Debe ir antes de :id)
+router.get('/search', productController.search);
+
 router.get('/create', productController.create);
 router.post('/', upload.single('image'), productController.store);
 

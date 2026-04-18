@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/login-registro.css"> </head>
+<body style="background-color: #050505; color: white; font-family: 'Helvetica', sans-serif;">
+    <%- include('../partials/header') %>
+
+    <main style="max-width: 500px; margin: 50px auto; padding: 20px; border: 1px solid #1a1a1a; background: #0a0a0a;">
+        <h2 style="text-align: center; color: #c4a77d; letter-spacing: 2px; margin-bottom: 30px;">EDITAR PERFIL</h2>
+
+        <form action="/users/edit/<%= user.id %>?_method=PUT" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <div class="form-group">
+                <label style="display: block; font-size: 0.8em; color: #666; margin-bottom: 5px;">Nombre Completo</label>
+                <input type="text" name="nombre" value="<%= user.nombre %>" 
+                    style="width: 100%; padding: 10px; background: #111; border: 1px solid #333; color: white; outline: none;">
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; font-size: 0.8em; color: #666; margin-bottom: 5px;">Email</label>
+                <input type="email" name="email" value="<%= user.email %>" 
+                    style="width: 100%; padding: 10px; background: #111; border: 1px solid #333; color: white; outline: none;">
+            </div>
+
+            <div class="form-group">
+                <label style="display: block; font-size: 0.8em; color: #666; margin-bottom: 5px;">Foto de Perfil Actual</label>
+                <img src="/images/users/<%= user.avatar %>" alt="avatar" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px; border: 1px solid #c4a77d;">
+                <input type="file" name="avatar" style="font-size: 0.8em; color: #666;">
+            </div>
+
+            <button type="submit" style="background: #c4a77d; color: black; border: none; padding: 12px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s;">
+                GUARDAR CAMBIOS
+            </button>
+            
+            <a href="/users/profile" style="text-align: center; color: #666; text-decoration: none; font-size: 0.8em; margin-top: 10px;">Cancelar</a>
+        </form>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

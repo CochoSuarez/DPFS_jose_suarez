@@ -16,6 +16,10 @@
                     <img src="/images/products/<%= producto.image %>" alt="<%= producto.name %>">
                     
                     <div class="info">
+                        <p style="font-style: italic; color: #888; font-size: 0.9em; margin-bottom: 5px;">
+                            <%= producto.category ? producto.category.nombre : 'Sin categoría' %>
+                        </p>
+
                         <h3><%= producto.name %></h3>
                         <p class="precio">$<%= producto.price.toLocaleString('es-AR') %></p>
                         

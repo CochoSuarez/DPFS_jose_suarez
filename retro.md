@@ -60,3 +60,15 @@ Seguridad Extra: Ahora el sitio avisa si falta un campo antes de enviar el formu
 APIs: Creamos rutas que devuelven JSON de usuarios y productos para que otros sistemas lean nuestros datos.
 
 Desafío: Fue difícil coordinar los nombres de las variables entre inglés y español, pero logramos que todo conecte bien.
+
+Sprint 8: APIs y Dashboard en React
+
+APIs de Usuarios: Creamos endpoints para listar usuarios y ver sus detalles en formato JSON, asegurando que no se filtre información sensible como contraseñas.
+
+APIs de Productos: Implementamos rutas que devuelven el total de productos, el conteo por categorías y el detalle individual con sus relaciones y URLs de imágenes.
+
+Dashboard React: Desarrollamos una aplicación independiente y modularizada para visualizar las métricas del negocio (totales de productos, usuarios y categorías).
+
+Consumo de Datos: Logramos que React se comunique con nuestra API de Node.js para mostrar el último producto creado y el listado completo de instrumentos.
+
+Metodologías Ágiles: Reiniciamos el tablero de trabajo para organizar la transición entre el back-end tradicional y el front-end moderno con React.

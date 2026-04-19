@@ -21,29 +21,27 @@ const upload = multer({ storage });
 
 // --- RUTAS ---
 
-// Listado
+// 1. Listado
 router.get('/', productController.index);
 
-// BÚSQUEDA
+// 2. Búsqueda
 router.get('/search', productController.search);
 
-// CREACIÓN
+// 3. Creación
 router.get('/create', productController.create);
-// Agregamos las validaciones al POST
 router.post('/', upload.single('image'), productValidations, productController.store);
 
-// Carrito
-router.get('/cart', (req, res) => res.render('products/productCart'));
+// 4. Carrito (Actualizada para usar el controlador)
+router.get('/cart', productController.cart);
 
-// DETALLE
+// 5. Detalle (Siempre debajo de las rutas estáticas como /cart o /create)
 router.get('/:id', productController.detail);
 
-// EDICIÓN
+// 6. Edición
 router.get('/:id/edit', productController.edit);
-// Agregamos las validaciones al PUT
 router.put('/:id', upload.single('image'), productValidations, productController.update);
 
-// BORRADO
+// 7. Borrado
 router.delete('/:id', productController.destroy);
 
 module.exports = router;

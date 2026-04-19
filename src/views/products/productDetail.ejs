@@ -9,12 +9,19 @@
     <main class="detalle-producto-main">
         <section class="contenedor-detalle">
             <div class="bloque-imagen">
-                <img src="/images/products/<%= product.image %>" class="producto-detalle-imagen" alt="<%= product.name %>">
+                <% 
+                    // Lógica para determinar la ruta de la imagen
+                    let imagePath = product.image.includes('http') ? product.image : '/images/products/' + product.image;
+                %>
+                <img src="<%= imagePath %>" 
+                     class="producto-detalle-imagen" 
+                     alt="<%= product.name %>"
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/500x400/050505/c4a77d?text=Imagen+No+Disponible';">
             </div>
 
             <div class="bloque-info">
                 <p style="text-align: left; font-style: italic; color: #888; margin-bottom: 5px; font-family: inherit;">
-                    <%= product.category ? product.category.nombre : 'Sin categoría' %>
+                    <%= product.category ? (product.category.nombre || product.category.name) : 'Sin categoría' %>
                 </p>
                 
                 <h1><%= product.name %></h1>
@@ -25,10 +32,13 @@
                     <%= product.description %>
                 </p>
 
-                <p class="precio-detalle">$<%= product.price.toLocaleString('es-AR') %></p>
+                <p class="precio-detalle">$<%= product.price ? product.price.toLocaleString('es-AR') : '0' %></p>
 
                 <div class="acciones-compra">
-                    <button class="btn-comprar">AGREGAR AL CARRITO</button>
+                    <button class="btn-comprar" 
+                            onclick="addToCart('<%= product.id %>', '<%= product.name %>', <%= product.price %>, '<%= product.image %>')">
+                        AGREGAR AL CARRITO
+                    </button>
                     
                     <div class="admin-actions" style="margin-top: 20px;">
                         <a href="/products/<%= product.id %>/edit" class="btn-edit-secundario">
@@ -45,5 +55,7 @@
     </main>
 
     <%- include('../partials/footer') %>
+
+    
 </body>
 </html>

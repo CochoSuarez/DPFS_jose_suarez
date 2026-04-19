@@ -13,15 +13,15 @@
         <section class="productos-grid">
             <% products.forEach(producto => { %>
                 <article class="producto-card">
-                    <img src="/images/products/<%= producto.image %>" alt="<%= producto.name %>">
+                    <img src="<%= producto.image %>" alt="<%= producto.name %>">
                     
                     <div class="info">
                         <p style="font-style: italic; color: #888; font-size: 0.9em; margin-bottom: 5px;">
-                            <%= producto.category ? producto.category.nombre : 'Sin categoría' %>
+                            <%= producto.category ? (producto.category.nombre || producto.category.name) : 'Sin categoría' %>
                         </p>
 
                         <h3><%= producto.name %></h3>
-                        <p class="precio">$<%= producto.price.toLocaleString('es-AR') %></p>
+                        <p class="precio">$<%= producto.price ? producto.price.toLocaleString('es-AR') : 'Consultar' %></p>
                         
                         <a href="/products/<%= producto.id %>" class="btn-detalle">Ver Detalle</a>
                     </div>

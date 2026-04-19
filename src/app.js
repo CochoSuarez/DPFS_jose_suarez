@@ -3,6 +3,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const cors = require('cors'); // <-- AGREGADO: Importamos CORS
 
 const app = express();
 
@@ -12,7 +13,7 @@ const userRouter = require('./routes/userRouter');
 
 // --- ENRUTADORES DE LAS APIs ---
 const apiUsersRouter = require('./routes/api/usersApiRoutes'); 
-const apiProductsRouter = require('./routes/api/productsApiRoutes'); // <-- NUEVO: Paso 3a
+const apiProductsRouter = require('./routes/api/productsApiRoutes'); 
 
 const productController = require('./controllers/productController');
 
@@ -20,6 +21,7 @@ const productController = require('./controllers/productController');
 const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware');
 
 // --- CONFIGURACIÓN Y MIDDLEWARES ---
+app.use(cors()); // <-- AGREGADO: Habilitamos que otras apps (como React) se conecten
 app.use(express.static(path.resolve(__dirname, '../public')));
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, './views'));
@@ -53,7 +55,7 @@ app.use('/users', userRouter);
 
 // --- RUTAS DE LAS APIs ---
 app.use('/api/users', apiUsersRouter); 
-app.use('/api/products', apiProductsRouter); // <-- NUEVO: Paso 3b
+app.use('/api/products', apiProductsRouter); 
 
 // Levantamos el servidor (Mantenemos tu puerto 3001)
 app.listen(3001, () => console.log('Servidor Boutique funcionando en http://localhost:3001'));

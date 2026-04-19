@@ -2,17 +2,40 @@ const db = require('../../models');
 const { Op } = require('sequelize');
 const { validationResult } = require('express-validator');
 
+// Función auxiliar para manejar las imágenes (convive local con URLs)
+const getImageUrl = (imageName) => {
+    if (!imageName) return '/images/products/default-image.png';
+    if (imageName.includes('http')) {
+        return imageName;
+    }
+    return `/images/products/${imageName}`;
+};
+
 const controller = {
 
-    // 1. Home / Listado (READ)
+  // 1. Home / Listado (READ)
     index: async (req, res) => {
         try {
-            const products = await db.Product.findAll({
+            const productsFromDB = await db.Product.findAll({
                 include: [{ association: "category" }]
             });
+
+            const products = productsFromDB.map(p => {
+                let producto = p.toJSON();
+                
+                if (producto.image && !producto.image.includes('http')) {
+                    producto.image = '/images/products/' + producto.image;
+                } 
+                if (!producto.image) {
+                    producto.image = '/images/products/default-image.png';
+                }
+
+                return producto;
+            });
+
             res.render('index', { products });
         } catch (error) {
-            console.log(error);
+            console.log("Error en el Index:", error);
             res.send("Error al cargar los productos");
         }
     },
@@ -21,12 +44,19 @@ const controller = {
     search: async (req, res) => {
         try {
             let busqueda = req.query.search;
-            const products = await db.Product.findAll({
+            const productsFromDB = await db.Product.findAll({
                 where: {
                     name: { [Op.like]: '%' + busqueda + '%' }
                 },
                 include: [{ association: "category" }]
             });
+
+            const products = productsFromDB.map(p => {
+                let product = p.toJSON();
+                product.imageUrl = getImageUrl(product.image);
+                return product;
+            });
+
             res.render('index', { products }); 
         } catch (error) {
             console.log(error);
@@ -34,16 +64,24 @@ const controller = {
         }
     },
 
+    // --- NUEVO: VISTA DEL CARRITO ---
+    cart: (req, res) => {
+        return res.render('products/productCart');
+    },
+
     // 3. Detalle de un producto (READ)
     detail: async (req, res) => {
         try {
-            const product = await db.Product.findByPk(req.params.id, {
+            const productDB = await db.Product.findByPk(req.params.id, {
                 include: [{ association: "category" }]
             });
 
-            if (!product) {
+            if (!productDB) {
                 return res.send("Producto no encontrado");
             }
+
+            let product = productDB.toJSON();
+            product.imageUrl = getImageUrl(product.image);
 
             res.render('products/productDetail', { product });
         } catch (error) {

@@ -7,26 +7,37 @@
     <main style="max-width: 600px; margin: 40px auto; background: #1a1a1a; padding: 30px; border: 1px solid #c4a77d;">
         <h2 style="color: #c4a77d; margin-bottom: 20px;">Editando: <%= productToEdit.name %></h2>
 
-        <form action="/products/<%= productToEdit.id %>?_method=PUT" method="POST" enctype="multipart/form-data"
+        <form id="productEditForm" action="/products/<%= productToEdit.id %>?_method=PUT" method="POST" enctype="multipart/form-data" novalidate
             style="display: flex; flex-direction: column; gap: 15px;">
 
             <label style="color: #666; font-size: 12px;">Nombre del instrumento</label>
-            <input type="text" name="name" value="<%= productToEdit.name %>"
-                style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <input type="text" name="nombre" id="nombre"
+                value="<%= locals.oldData ? oldData.nombre : productToEdit.name %>"
+                style="padding: 10px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.nombre ? '#ff4d4d' : '#333' %>; color: white;">
+            <p id="error-nombre" style="color: #ff4d4d; font-size: 12px; margin-top: -5px; display: none;"></p>
+            <% if (locals.errors && errors.nombre) { %>
+                <p style="color: #ff4d4d; font-size: 12px; margin-top: -5px;"><%= errors.nombre.msg %></p>
+            <% } %>
 
             <label style="color: #666; font-size: 12px;">Descripción</label>
-            <textarea name="description"
-                style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white; min-height: 80px;"><%= productToEdit.description %></textarea>
+            <textarea name="descripcion" id="descripcion"
+                style="padding: 10px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.descripcion ? '#ff4d4d' : '#333' %>; color: white; min-height: 80px;"><%= locals.oldData ? oldData.descripcion : productToEdit.description %></textarea>
+            <p id="error-descripcion" style="color: #ff4d4d; font-size: 12px; margin-top: -5px; display: none;"></p>
+            <% if (locals.errors && errors.descripcion) { %>
+                <p style="color: #ff4d4d; font-size: 12px; margin-top: -5px;"><%= errors.descripcion.msg %></p>
+            <% } %>
 
             <label style="color: #666; font-size: 12px;">Precio</label>
-            <input type="number" name="price" value="<%= productToEdit.price %>"
+            <input type="number" name="price" id="price" value="<%= locals.oldData ? oldData.price : productToEdit.price %>"
                 style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <p id="error-price" style="color: #ff4d4d; font-size: 12px; margin-top: -5px; display: none;"></p>
 
             <label style="color: #666; font-size: 12px;">Categoría</label>
-            <select name="category" required
+            <select name="category" id="category" required
                 style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
                 <% categories.forEach(cat => { %>
-                    <option value="<%= cat.id %>" <%= cat.id == productToEdit.category_id ? 'selected' : '' %>>
+                    <option value="<%= cat.id %>" 
+                        <%= (locals.oldData && oldData.category == cat.id) || (!locals.oldData && cat.id == productToEdit.category_id) ? 'selected' : '' %>>
                         <%= cat.nombre %>
                     </option>
                 <% }) %>
@@ -35,7 +46,11 @@
             <label style="color: #c4a77d; font-size: 14px; margin-top: 10px;">
                 Imagen actual: <%= productToEdit.image %>
             </label>
-            <input type="file" name="image" style="color: #666;">
+            <input type="file" name="image" id="image" accept="image/*" style="color: #666;">
+            <p id="error-image" style="color: #ff4d4d; font-size: 12px; display: none;"></p>
+            <% if (locals.errors && errors.image) { %>
+                <p style="color: #ff4d4d; font-size: 12px;"><%= errors.image.msg %></p>
+            <% } %>
 
             <button type="submit"
                 style="background: #c4a77d; padding: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; color: black;">
@@ -46,6 +61,7 @@
         </form>
     </main>
     <%- include('../partials/footer') %>
-</body>
 
+    <script src="/js/productEditValidation.js"></script>
+</body>
 </html>

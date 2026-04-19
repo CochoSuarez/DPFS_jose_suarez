@@ -1,5 +1,6 @@
 const bcryptjs = require('bcryptjs');
 const db = require('../../models'); // Subimos dos niveles hasta la raíz
+const { validationResult } = require('express-validator'); // Requerimos esto para capturar errores
 
 const controller = {
     // Muestra la vista de Login
@@ -15,13 +16,24 @@ const controller = {
     // Procesa el Registro (Sequelize)
     processRegister: async (req, res) => {
         try {
+            const resultValidation = validationResult(req);
+
+            if (resultValidation.errors.length > 0) {
+                return res.render('users/register', {
+                    errors: resultValidation.mapped(),
+                    oldData: req.body
+                });
+            }
+
             await db.User.create({
                 nombre: req.body.nombre,
                 email: req.body.email,
                 password: bcryptjs.hashSync(req.body.password, 10),
                 avatar: req.file ? req.file.filename : 'default-avatar.png'
             });
+            
             res.redirect('/users/login');
+
         } catch (error) {
             console.log(error);
             res.send('Error al registrar el usuario');
@@ -31,11 +43,23 @@ const controller = {
     // Procesa el Login (Sequelize)
     processLogin: async (req, res) => {
         try {
+            // 1. Validaciones básicas de campos vacíos o formato
+            const resultValidation = validationResult(req);
+
+            if (resultValidation.errors.length > 0) {
+                return res.render('users/login', {
+                    errors: resultValidation.mapped(),
+                    oldData: req.body
+                });
+            }
+
+            // 2. Buscamos al usuario por email
             const userToLogin = await db.User.findOne({
                 where: { email: req.body.email }
             });
 
             if (userToLogin) {
+                // 3. Comparamos la contraseña
                 let isPasswordOk = bcryptjs.compareSync(req.body.password, userToLogin.password);
                 
                 if (isPasswordOk) {
@@ -51,13 +75,17 @@ const controller = {
                     return res.redirect('/users/profile');
                 }
                 
+                // Si la contraseña no coincide
                 return res.render('users/login', {
-                    errors: { email: { msg: 'Las credenciales son inválidas' } }
+                    errors: { email: { msg: 'Las credenciales son inválidas' } },
+                    oldData: req.body
                 });
             }
 
+            // Si el email no existe
             return res.render('users/login', {
-                errors: { email: { msg: 'No se encuentra este email en nuestra base de datos' } }
+                errors: { email: { msg: 'No se encuentra este email en nuestra base de datos' } },
+                oldData: req.body
             });
 
         } catch (error) {
@@ -73,7 +101,7 @@ const controller = {
         });
     },
 
-    // --- MÉTODOS DE EDICIÓN (PARA EL SPRINT 6) ---
+    // --- MÉTODOS DE EDICIÓN ---
 
     // Muestra el formulario de edición
     edit: async (req, res) => {
@@ -89,7 +117,6 @@ const controller = {
     // Procesa la edición
     update: async (req, res) => {
         try {
-            // 1. Actualizamos en la DB
             await db.User.update({
                 nombre: req.body.nombre,
                 email: req.body.email,
@@ -98,12 +125,10 @@ const controller = {
                 where: { id: req.params.id }
             });
 
-            // 2. Buscamos el usuario actualizado para refrescar la sesión
             const userUpdated = await db.User.findByPk(req.params.id);
             let userPlain = userUpdated.get({ plain: true });
             delete userPlain.password;
             
-            // 3. Sobreescribimos la sesión para que el header refleje los cambios
             req.session.userLogged = userPlain;
 
             res.redirect('/users/profile');

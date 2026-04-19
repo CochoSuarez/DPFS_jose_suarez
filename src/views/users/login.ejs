@@ -6,23 +6,31 @@
 <body>
     <%- include('../partials/header') %>
 
-    <main>
-        <div class="auth-container">
-            <h2 style="color: #c4a77d; text-align: center; margin-bottom: 20px;">Ingresar</h2>
+    <main style="display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 40px 0;">
+        <div class="auth-container" style="background: #1a1a1a; padding: 40px; border: 1px solid #c4a77d; width: 100%; max-width: 450px;">
+            <h2 style="color: #c4a77d; text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">Ingresar</h2>
 
-            <form action="/users/login" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
+            <form id="loginForm" action="/users/login" method="POST" novalidate style="display: flex; flex-direction: column; gap: 20px;">
                 
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="Email" required
-                        style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
+                    <label style="color: #666; font-size: 12px; display: block; margin-bottom: 5px;">Correo Electrónico</label>
+                    <input type="email" name="email" id="email" placeholder="usuario@gmail.com" 
+                           value="<%= locals.oldData ? oldData.email : null %>"
+                           style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.email ? '#ff4d4d' : '#333' %>; color: white;">
+                    <p id="error-email" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none;"></p>
                     <% if (locals.errors && errors.email) { %>
                         <p style="color: #ff4d4d; font-size: 12px; margin-top: 5px;"><%= errors.email.msg %></p>
                     <% } %>
                 </div>
 
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Contraseña" required
-                        style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
+                    <label style="color: #666; font-size: 12px; display: block; margin-bottom: 5px;">Contraseña</label>
+                    <input type="password" name="password" id="password" placeholder="Tu contraseña" 
+                           style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.password ? '#ff4d4d' : '#333' %>; color: white;">
+                    <p id="error-password" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none;"></p>
+                    <% if (locals.errors && errors.password) { %>
+                        <p style="color: #ff4d4d; font-size: 12px; margin-top: 5px;"><%= errors.password.msg %></p>
+                    <% } %>
                 </div>
 
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px; color: #666; font-size: 14px;">
@@ -31,19 +39,20 @@
                 </div>
 
                 <button type="submit"
-                    style="background: #c4a77d; color: black; padding: 15px; border: none; font-weight: bold; cursor: pointer;">
+                    style="background: #c4a77d; color: black; padding: 15px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px;">
                     INGRESAR
                 </button>
             </form>
 
-            <p style="text-align: center; margin-top: 15px; font-size: 13px; color: #666;">
+            <p style="text-align: center; margin-top: 25px; font-size: 13px; color: #666;">
                 ¿No tenés cuenta? <a href="/users/registro"
-                    style="color: #c4a77d; text-decoration: none;">Registrate</a>
+                    style="color: #c4a77d; text-decoration: none; font-weight: bold;">Registrate</a>
             </p>
         </div>
     </main>
 
     <%- include('../partials/footer') %>
-</body>
 
+    <script src="/js/userLoginValidation.js"></script>
+</body>
 </html>

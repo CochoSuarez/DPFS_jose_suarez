@@ -1,5 +1,6 @@
-const db = require('../../models'); // Importamos los modelos
+const db = require('../../models'); 
 const { Op } = require('sequelize');
+const { validationResult } = require('express-validator');
 
 const controller = {
 
@@ -16,7 +17,7 @@ const controller = {
         }
     },
 
-    // 2. Búsqueda de productos (SEARCH) - ¡NUEVO!
+    // 2. Búsqueda de productos (SEARCH)
     search: async (req, res) => {
         try {
             let busqueda = req.query.search;
@@ -26,7 +27,6 @@ const controller = {
                 },
                 include: [{ association: "category" }]
             });
-            // Usamos la misma vista de index o productList para mostrar los resultados
             res.render('index', { products }); 
         } catch (error) {
             console.log(error);
@@ -66,12 +66,22 @@ const controller = {
     // 5. Acción de creación (Guardado en DB)
     store: async (req, res) => {
         try {
+            const errors = validationResult(req);
+            
+            if (!errors.isEmpty()) {
+                const categories = await db.Category.findAll();
+                return res.render('products/productCreate', {
+                    categories,
+                    errors: errors.mapped(),
+                    oldData: req.body
+                });
+            }
+
             await db.Product.create({
-                name: req.body.name,
-                description: req.body.description,
+                name: req.body.nombre, 
+                description: req.body.descripcion, 
                 price: parseFloat(req.body.price),
                 category_id: req.body.category,
-                colors: req.body.colors,
                 image: req.file ? req.file.filename : 'default-image.png'
             });
             res.redirect('/products');
@@ -104,9 +114,22 @@ const controller = {
     // 7. Acción de edición (PUT)
     update: async (req, res) => {
         try {
+            const errors = validationResult(req);
+
+            if (!errors.isEmpty()) {
+                const categories = await db.Category.findAll();
+                const product = await db.Product.findByPk(req.params.id);
+                return res.render('products/productEdit', {
+                    productToEdit: product, 
+                    categories,
+                    errors: errors.mapped(),
+                    oldData: req.body
+                });
+            }
+
             await db.Product.update({
-                name: req.body.name,
-                description: req.body.description,
+                name: req.body.nombre,
+                description: req.body.descripcion,
                 price: parseFloat(req.body.price),
                 category_id: req.body.category,
                 image: req.file ? req.file.filename : undefined

@@ -9,10 +9,15 @@ const app = express();
 // --- REQUERIMOS LOS ENRUTADORES ---
 const productRouter = require('./routes/productRouter');
 const userRouter = require('./routes/userRouter');
+
+// --- ENRUTADORES DE LAS APIs ---
+const apiUsersRouter = require('./routes/api/usersApiRoutes'); 
+const apiProductsRouter = require('./routes/api/productsApiRoutes'); // <-- NUEVO: Paso 3a
+
 const productController = require('./controllers/productController');
 
 // --- REQUERIMOS LOS MIDDLEWARES DE APLICACIÓN ---
-const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware'); // <-- NUEVO
+const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware');
 
 // --- CONFIGURACIÓN Y MIDDLEWARES ---
 app.use(express.static(path.resolve(__dirname, '../public')));
@@ -35,7 +40,7 @@ app.use(session({
 app.use(cookieParser());
 
 // Middleware de Logueo (SIEMPRE después de session y cookie-parser)
-app.use(userLoggedMiddleware); // <-- NUEVO
+app.use(userLoggedMiddleware);
 
 // --- RUTAS ---
 
@@ -46,5 +51,9 @@ app.get('/', productController.index);
 app.use('/products', productRouter);
 app.use('/users', userRouter);
 
-// Levantamos el servidor
+// --- RUTAS DE LAS APIs ---
+app.use('/api/users', apiUsersRouter); 
+app.use('/api/products', apiProductsRouter); // <-- NUEVO: Paso 3b
+
+// Levantamos el servidor (Mantenemos tu puerto 3001)
 app.listen(3001, () => console.log('Servidor Boutique funcionando en http://localhost:3001'));

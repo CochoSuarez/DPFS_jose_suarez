@@ -1,85 +1,62 @@
 Sprint 1: Planificación
-Dinámica de la Estrella de Mar:
-
 Comenzar a hacer: Definir diseño/paleta de colores final de manera simple y práctica.
 
-Hacer más: Aprovechar más las funciones de Figma para que en los wireframes se entienda mejor la función de cada campo (diferenciar botones, campos de texto, textos con links, etc.).
+Hacer más: Aprovechar Figma para diferenciar mejor botones y campos de texto.
 
 Continuar haciendo: Mantener la estética minimalista y el enfoque en instrumentos de alta gama.
 
 Hacer menos: Perder tiempo buscando la fuente perfecta; elegir una y avanzar.
 
-Dejar de hacer: Agregar funcionalidades extra a lo solicitado, en especial las muy complejas.
+Dejar de hacer: Agregar funcionalidades extra complejas no solicitadas.
 
 Sprint 2: Maquetación Estática
-Conclusiones:
+Logramos armar el HTML y CSS de las páginas principales.
 
-Logramos armar el HTML y CSS de las páginas principales (Home, Detalle, Carrito, Login y Registro).
-
-Se mantuvo la línea estética oscura y simple acordada en el Sprint 1.
+Se mantuvo la línea estética oscura y simple (negro y dorado).
 
 El mayor desafío fue lograr que la grilla de productos se vea ordenada.
 
 Sprint 3: Dinamismo (Node + Express + EJS)
-Conclusiones:
-
 Pasamos el sitio de HTML estático a un sistema dinámico con Express y EJS.
 
-Partials: Separamos el Head, Header y Footer para no repetir código.
+Partials: Separamos Head, Header y Footer para no repetir código.
 
-Carpetas: Organizamos las vistas en /products y /users como pedía el Sprint.
+Carpetas: Organizamos las vistas en /products y /users.
 
-Nuevas Vistas: Sumamos el listado de productos y los formularios de creación y edición sin cambiar el diseño que ya teníamos.
-
-
-
+Sumamos listado y formularios de CRUD sin cambiar el diseño original.
 
 Sprint 4: JSON y CRUD de Productos
-Planificación y Tareas:
+Estructura: Creamos archivos JSON para productos y usuarios.
 
-Estructura de Datos:** Creación de carpeta data y archivos products.json y users.json. 
-Refactor de Controladores:** Modificar productController.js para leer el JSON usando el módulo fs.
-Rutas CRUD: Implementar las 7 rutas principales (Listado, Detalle, Creación, Guardado, Edición, Actualización y Borrado).
-Métodos HTTP: Implementar POST, PUT y DELETE para que los formularios afecten al archivo JSON.
-Pruebas de Funcionalidad: Verificar que al borrar un producto desaparezca del JSON.
+Controladores: Usamos el módulo fs para leer y escribir datos.
 
+Rutas: Implementamos las 7 rutas principales de un CRUD.
 
+Métodos: Usamos POST, PUT y DELETE para que los cambios queden grabados en el JSON.
 
 Sprint 5: Session, Cookies y Usuarios
-Planificación y Tareas:
+Seguridad: Encriptamos contraseñas con bcryptjs.
 
-Seguridad: Encriptación de contraseñas con bcryptjs en el registro y login. 
+Session y Cookies: Implementamos el logueo y la función "recordarme".
 
-Session y Cookies: Implementación de "sesión" para mantener al usuario logueado y "cookies" para la función de recordarme. 
+Middlewares: Protegimos rutas privadas (como el Perfil) para que no entre cualquiera.
 
-Middlewares: Creación de filtros para proteger el acceso a ciertas rutas (como el perfil). 
+Header: Hicimos que el menú cambie si hay un usuario logueado.
 
-Header Dinámico: Modificación del menú para que cambie según si el usuario inició sesión o no. 
+Sprint 6: Base de Datos y Sequelize
+Migración: Dejamos atrás los JSON y pasamos todo a una base de datos MySQL.
 
-Conclusiones:
+Modelos: Creamos los modelos de Product, User y Category.
 
-Lo más difícil fue entender cómo pasar los datos del usuario a todas las vistas usando el middleware de aplicación.
+Buscador: Implementamos una barra de búsqueda que funciona de verdad.
 
-Me sirvió mucho ver cómo el sitio "cambia" solo cuando te logueás, lo hace ver mucho más profesional.
+Relaciones: Conectamos productos con sus categorías usando asociaciones de Sequelize.
 
-Aprendí a usar las herramientas de desarrollador del navegador para revisar si las cookies se estaban creando bien.
+Sprint 7: Validaciones y APIs
+Validaciones: Agregamos seguridad en los formularios con express-validator (Back) y JavaScript (Front).
 
+Seguridad Extra: Ahora el sitio avisa si falta un campo antes de enviar el formulario.
 
+APIs: Creamos rutas que devuelven JSON de usuarios y productos para que otros sistemas lean nuestros datos.
 
-## Retrospectiva - Sprint 6 (Base de Datos y Sequelize)
-
-**1. ¿Qué hicimos bien?**
-* Logramos migrar exitosamente toda la lógica de archivos JSON a una base de datos relacional (MySQL).
-* Implementamos un buscador funcional que mejora significativamente la UX.
-* Refinamos el diseño del Header, logrando un equilibrio visual boutique.
-* Integramos correctamente las asociaciones de Sequelize (Products belongsTo Category).
-
-**2. ¿Qué podríamos hacer mejor?**
-* Las validaciones de formularios todavía son básicas; deberíamos robustecerlas en el próximo sprint.
-* El manejo de errores en los controladores podría ser más específico para ayudar al debugging.
-
-**3. ¿Qué debemos dejar de hacer?**
-* Dejar de hardcodear estilos en línea en el HTML y empezar a migrar todo a clases de CSS para mantener la limpieza del código.
-
-**4. ¿Qué debemos empezar a hacer?**
-* Empezar a planificar la implementación de una API para que el Dashboard de React pueda consumir nuestros datos de manera independiente.
+Desafío: Fue difícil coordinar los nombres de las variables entre inglés y español, pero logramos que todo conecte bien.

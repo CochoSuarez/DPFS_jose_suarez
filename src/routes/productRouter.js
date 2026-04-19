@@ -4,6 +4,9 @@ const path = require('path');
 const multer = require('multer');
 const productController = require('../controllers/productController');
 
+// --- REQUERIMOS EL MIDDLEWARE DE VALIDACIÓN ---
+const productValidations = require('../middlewares/productValidation');
+
 // --- CONFIGURACIÓN DE MULTER ---
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -18,24 +21,29 @@ const upload = multer({ storage });
 
 // --- RUTAS ---
 
-// Listado y Creación
+// Listado
 router.get('/', productController.index);
 
-// BÚSQUEDA (Debe ir antes de :id)
+// BÚSQUEDA
 router.get('/search', productController.search);
 
+// CREACIÓN
 router.get('/create', productController.create);
-router.post('/', upload.single('image'), productController.store);
+// Agregamos las validaciones al POST
+router.post('/', upload.single('image'), productValidations, productController.store);
 
 // Carrito
 router.get('/cart', (req, res) => res.render('products/productCart'));
 
-// Detalle, Edición y Borrado
+// DETALLE
 router.get('/:id', productController.detail);
 
+// EDICIÓN
 router.get('/:id/edit', productController.edit);
-router.put('/:id', upload.single('image'), productController.update);
+// Agregamos las validaciones al PUT
+router.put('/:id', upload.single('image'), productValidations, productController.update);
 
+// BORRADO
 router.delete('/:id', productController.destroy);
 
 module.exports = router;

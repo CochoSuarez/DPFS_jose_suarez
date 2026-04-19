@@ -10,30 +10,48 @@
         <div class="auth-container" style="background: #1a1a1a; padding: 40px; border: 1px solid #c4a77d; width: 100%; max-width: 450px;">
             <h2 style="color: #c4a77d; text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">Crear Cuenta</h2>
             
-            <form action="/users/registro" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 20px;">
+            <form id="registerForm" action="/users/registro" method="POST" enctype="multipart/form-data" novalidate style="display: flex; flex-direction: column; gap: 20px;">
                 
                 <div class="form-group">
                     <label style="color: #666; font-size: 12px; display: block; margin-bottom: 5px;">Nombre Completo</label>
-                    <input type="text" name="nombre" placeholder="Ej: Juan Perez" required 
-                           style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
+                    <input type="text" name="nombre" id="nombre" placeholder="Ej: Juan Perez" 
+                           value="<%= locals.oldData ? oldData.nombre : null %>"
+                           style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.nombre ? '#ff4d4d' : '#333' %>; color: white;">
+                    <p id="error-nombre" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none;"></p>
+                    <% if (locals.errors && errors.nombre) { %>
+                        <p style="color: #ff4d4d; font-size: 12px; margin-top: 5px;"><%= errors.nombre.msg %></p>
+                    <% } %>
                 </div>
 
                 <div class="form-group">
                     <label style="color: #666; font-size: 12px; display: block; margin-bottom: 5px;">Correo Electrónico</label>
-                    <input type="email" name="email" placeholder="usuario@gmail.com" required 
-                           style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
+                    <input type="email" name="email" id="email" placeholder="usuario@gmail.com" 
+                           value="<%= locals.oldData ? oldData.email : null %>"
+                           style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.email ? '#ff4d4d' : '#333' %>; color: white;">
+                    <p id="error-email" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none;"></p>
+                    <% if (locals.errors && errors.email) { %>
+                        <p style="color: #ff4d4d; font-size: 12px; margin-top: 5px;"><%= errors.email.msg %></p>
+                    <% } %>
                 </div>
 
                 <div class="form-group">
                     <label style="color: #666; font-size: 12px; display: block; margin-bottom: 5px;">Contraseña</label>
-                    <input type="password" name="password" placeholder="Mínimo 6 caracteres" required 
-                           style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #333; color: white;">
+                    <input type="password" name="password" id="password" placeholder="Mínimo 8 caracteres" 
+                           style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.password ? '#ff4d4d' : '#333' %>; color: white;">
+                    <p id="error-password" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none;"></p>
+                    <% if (locals.errors && errors.password) { %>
+                        <p style="color: #ff4d4d; font-size: 12px; margin-top: 5px;"><%= errors.password.msg %></p>
+                    <% } %>
                 </div>
 
                 <div class="form-group">
                     <label style="color: #666; font-size: 12px; display: block; margin-bottom: 5px;">Foto de Perfil</label>
-                    <input type="file" name="avatar" accept="image/*" 
+                    <input type="file" name="avatar" id="avatar" accept="image/*" 
                            style="width: 100%; color: #666; font-size: 13px; padding: 5px 0;">
+                    <p id="error-avatar" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none;"></p>
+                    <% if (locals.errors && errors.avatar) { %>
+                        <p style="color: #ff4d4d; font-size: 12px; margin-top: 5px;"><%= errors.avatar.msg %></p>
+                    <% } %>
                 </div>
                 
                 <button type="submit" style="background: #c4a77d; color: black; padding: 15px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px;">
@@ -48,5 +66,7 @@
     </main>
 
     <%- include('../partials/footer') %>
+    
+    <script src="/js/userRegisterValidation.js"></script>
 </body>
 </html>

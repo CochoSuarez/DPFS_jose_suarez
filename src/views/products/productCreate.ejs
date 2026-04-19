@@ -6,33 +6,58 @@
     <main style="max-width: 600px; margin: 40px auto; background: #1a1a1a; padding: 30px; border: 1px solid #c4a77d;">
         <h2 style="color: #c4a77d; margin-bottom: 20px;">Cargar Nuevo Producto</h2>
         
-        <form action="/products" method="POST" enctype="multipart/form-data" class="create-form" style="display: flex; flex-direction: column; gap: 15px;">
+        <form id="productForm" action="/products" method="POST" enctype="multipart/form-data" novalidate style="display: flex; flex-direction: column; gap: 15px;">
             
-            <input type="text" name="name" placeholder="Nombre del producto" required style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <label style="color: #666; font-size: 12px;">Nombre del instrumento</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Ej: Guitarra Fender Stratocaster" 
+                   value="<%= locals.oldData ? oldData.nombre : null %>"
+                   style="padding: 10px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.nombre ? '#ff4d4d' : '#333' %>; color: white;">
+            <p id="error-nombre" style="color: #ff4d4d; font-size: 12px; margin-top: -5px; display: none;"></p>
+            <% if (locals.errors && errors.nombre) { %>
+                <p style="color: #ff4d4d; font-size: 12px; margin-top: -5px;"><%= errors.nombre.msg %></p>
+            <% } %>
             
-            <textarea name="description" placeholder="Descripción" required style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white; min-height: 100px;"></textarea>
+            <label style="color: #666; font-size: 12px;">Descripción</label>
+            <textarea name="descripcion" id="descripcion" placeholder="Mínimo 20 caracteres" 
+                      style="padding: 10px; background: #0f0f0f; border: 1px solid <%= locals.errors && errors.descripcion ? '#ff4d4d' : '#333' %>; color: white; min-height: 100px;"><%= locals.oldData ? oldData.descripcion : '' %></textarea>
+            <p id="error-descripcion" style="color: #ff4d4d; font-size: 12px; margin-top: -5px; display: none;"></p>
+            <% if (locals.errors && errors.descripcion) { %>
+                <p style="color: #ff4d4d; font-size: 12px; margin-top: -5px;"><%= errors.descripcion.msg %></p>
+            <% } %>
             
-            <input type="number" name="price" placeholder="Precio" required style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <label style="color: #666; font-size: 12px;">Precio</label>
+            <input type="number" name="price" id="price" placeholder="Precio en ARS" 
+                   value="<%= locals.oldData ? oldData.price : null %>"
+                   style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <p id="error-price" style="color: #ff4d4d; font-size: 12px; margin-top: -5px; display: none;"></p>
             
-            <select name="category" required style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
+            <label style="color: #666; font-size: 12px;">Categoría</label>
+            <select name="category" id="category" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
                 <option value="" disabled selected>Elegí una categoría</option>
                 <% categories.forEach(cat => { %>
-                    <option value="<%= cat.id %>"><%= cat.nombre %></option>
+                    <option value="<%= cat.id %>" <%= locals.oldData && oldData.category == cat.id ? 'selected' : '' %>>
+                        <%= cat.nombre %>
+                    </option>
                 <% }) %>
             </select>
             
-            <input type="text" name="colors" placeholder="Colores disponibles" style="padding: 10px; background: #0f0f0f; border: 1px solid #333; color: white;">
-            
-            <div style="display: flex; flex-direction: column; gap: 5px;">
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 10px;">
                 <label style="font-size: 14px; color: #c4a77d;">Imagen del producto:</label>
-                <input type="file" name="image" accept="image/*" required style="color: #666;">
+                <input type="file" name="image" id="image" accept="image/*" style="color: #666;">
+                <p id="error-image" style="color: #ff4d4d; font-size: 12px; display: none;"></p>
+                <% if (locals.errors && errors.image) { %>
+                    <p style="color: #ff4d4d; font-size: 12px;"><%= errors.image.msg %></p>
+                <% } %>
             </div>
 
-            <button type="submit" style="background: #c4a77d; padding: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; color: black;">
+            <button type="submit" style="background: #c4a77d; padding: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 15px; color: black;">
                 CREAR PRODUCTO
             </button>
+            <a href="/products" style="text-align: center; color: #666; text-decoration: none; font-size: 14px; margin-top: 5px;">Cancelar</a>
         </form>
     </main>
     <%- include('../partials/footer') %>
+
+    <script src="/js/productCreateValidation.js"></script>
 </body>
 </html>

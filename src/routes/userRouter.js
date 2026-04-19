@@ -7,6 +7,8 @@ const userController = require('../controllers/userController');
 // Requerimos los middlewares
 const guestMiddleware = require('../middlewares/guestMiddleware');
 const authMiddleware = require('../middlewares/authMiddleware');
+const registerValidations = require('../middlewares/userRegisterValidation'); 
+const loginValidations = require('../middlewares/userLoginValidation'); // <-- NUEVO
 
 // --- CONFIGURACIÓN DE MULTER ---
 const storage = multer.diskStorage({
@@ -24,19 +26,20 @@ const upload = multer({ storage });
 
 // Login (Solo invitados)
 router.get('/login', guestMiddleware, userController.login);
-router.post('/login', userController.processLogin);
+// Proceso de Login con validaciones (POST) <-- ACTUALIZADO
+router.post('/login', loginValidations, userController.processLogin);
 
 // Registro (Solo invitados)
 router.get('/registro', guestMiddleware, userController.register);
-router.post('/registro', upload.single('avatar'), userController.processRegister);
+
+// Proceso de Registro con validaciones (POST)
+router.post('/registro', upload.single('avatar'), registerValidations, userController.processRegister);
 
 // Perfil (Solo usuarios logueados)
 router.get('/profile', authMiddleware, userController.profile);
 
-// --- EDICIÓN DE PERFIL (NUEVO) ---
-// Formulario de edición
+// --- EDICIÓN DE PERFIL ---
 router.get('/edit/:id', authMiddleware, userController.edit);
-// Acción de actualización
 router.put('/edit/:id', authMiddleware, upload.single('avatar'), userController.update);
 
 // Logout

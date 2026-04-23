@@ -4,8 +4,9 @@ const path = require('path');
 const multer = require('multer');
 const productController = require('../controllers/productController');
 
-// --- REQUERIMOS EL MIDDLEWARE DE VALIDACIÓN ---
+// --- REQUERIMOS LOS MIDDLEWARES ---
 const productValidations = require('../middlewares/productValidation');
+const adminMiddleware = require('../middlewares/adminMiddleware'); // <-- EL NUEVO GUARDAESPALDAS
 
 // --- CONFIGURACIÓN DE MULTER ---
 const storage = multer.diskStorage({
@@ -21,27 +22,27 @@ const upload = multer({ storage });
 
 // --- RUTAS ---
 
-// 1. Listado
+// 1. Listado (Público)
 router.get('/', productController.index);
 
-// 2. Búsqueda
+// 2. Búsqueda (Público)
 router.get('/search', productController.search);
 
-// 3. Creación
-router.get('/create', productController.create);
-router.post('/', upload.single('image'), productValidations, productController.store);
+// 3. Creación (SOLO ADMIN)
+router.get('/create', adminMiddleware, productController.create);
+router.post('/', upload.single('image'), adminMiddleware, productValidations, productController.store);
 
-// 4. Carrito (Actualizada para usar el controlador)
+// 4. Carrito (Público/Usuario)
 router.get('/cart', productController.cart);
 
-// 5. Detalle (Siempre debajo de las rutas estáticas como /cart o /create)
+// 5. Detalle (Público)
 router.get('/:id', productController.detail);
 
-// 6. Edición
-router.get('/:id/edit', productController.edit);
-router.put('/:id', upload.single('image'), productValidations, productController.update);
+// 6. Edición (SOLO ADMIN)
+router.get('/:id/edit', adminMiddleware, productController.edit);
+router.put('/:id', upload.single('image'), adminMiddleware, productValidations, productController.update);
 
-// 7. Borrado
-router.delete('/:id', productController.destroy);
+// 7. Borrado (SOLO ADMIN)
+router.delete('/:id', adminMiddleware, productController.destroy);
 
 module.exports = router;

@@ -18,11 +18,13 @@
             <% if (locals.isLogged) { %>
                 <li><a href="/users/profile">Hola, <%= locals.userLogged.nombre %></a></li>
                 
-                <li>
-                    <a href="/products/create" style="font-style: italic; font-size: 0.85em; color: #c4a77d; border: 1px dashed #c4a77d; padding: 4px 8px; border-radius: 3px; opacity: 0.8; text-decoration: none;">
-                        [ Admin: + Nuevo ]
-                    </a>
-                </li>
+                <% if (locals.userLogged.rol == 1) { %>
+                    <li>
+                        <a href="/products/create" style="font-style: italic; font-size: 0.85em; color: #c4a77d; border: 1px dashed #c4a77d; padding: 4px 8px; border-radius: 3px; opacity: 0.8; text-decoration: none;">
+                            [ Admin: + Nuevo ]
+                        </a>
+                    </li>
+                <% } %>
 
                 <li><a href="/users/logout">Salir</a></li>
             <% } else { %>

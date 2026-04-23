@@ -40,22 +40,22 @@
                         AGREGAR AL CARRITO
                     </button>
                     
-                    <div class="admin-actions" style="margin-top: 20px;">
-                        <a href="/products/<%= product.id %>/edit" class="btn-edit-secundario">
-                            Modificar Producto
-                        </a>
-                        
-                        <form action="/products/<%= product.id %>?_method=DELETE" method="POST" style="display: inline;">
-                            <button type="submit" class="btn-delete-link">Eliminar</button>
-                        </form>
+                    <% if (locals.isLogged && locals.userLogged.rol == 1) { %>
+                        <div class="admin-actions" style="margin-top: 20px;">
+                            <a href="/products/<%= product.id %>/edit" class="btn-edit-secundario">
+                                Modificar Producto
+                            </a>
+                            
+                            <form action="/products/<%= product.id %>?_method=DELETE" method="POST" style="display: inline;">
+                                <button type="submit" class="btn-delete-link">Eliminar</button>
+                            </form>
+                        </div>
+                    <% } %>
                     </div>
-                </div>
             </div>
         </section>
     </main>
 
     <%- include('../partials/footer') %>
-
-    
 </body>
 </html>
